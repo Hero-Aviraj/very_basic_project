@@ -20,8 +20,8 @@ const db=mysql.createPool({
         throw error;
     }
   }
-export{db,checkconnection};
 
+export {db,checkconnection}; 
 
 
 
