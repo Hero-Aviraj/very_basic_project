@@ -1,6 +1,7 @@
 import express from "express"
 import path from "path"
 import routs from "./routs/authrout.js"
+import user from "./routs/userrouts.js"
 import { fileURLToPath } from "url";
 import { checkconnection } from "./config/db.js";
 import  tabble  from "./utils/dbutils.js";
@@ -11,6 +12,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname,"public")));
 
 app.use("/",routs);
+app.use("/",user);
 
 
 app.listen(4000,async()=>{
