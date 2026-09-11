@@ -1,4 +1,4 @@
-
+import bcrypt from "bcrypt"
 import express from "express";
 import { config } from "process"
 import {db}from "../config/db.js"
@@ -12,8 +12,9 @@ if(!name || !email || !password){
     return res.status(400).json({error:"name email and password  are missing"});
 }
 try{
+  const hasedpassword= await bcrypt.hash(password,10);
     const sql="insert into user_data (name,email,password)values(?,?,?)";
-    const[result]=await db.execute(sql,[name,email,password]);
+    const[result]=await db.execute(sql,[name,email,hasedpassword]);
     res.status(201).json({id:result.insertId,name});
 }catch(err){
   if(err.code==="ER_DUP_ENTRY"){

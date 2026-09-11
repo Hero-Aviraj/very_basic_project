@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import express from "express";
 import {db} from "../config/db.js"
 //const { access } = require("fs");
@@ -16,14 +17,15 @@ router.post("/login",async(req,res)=>{
         });
       }
       const user=result[0]
-      if(password !== user.password){
+      const ismatch= await bcrypt.compare(password,user.password);
+      if(!ismatch){
         return res.status(401).json({
           success:false,
           message:"invalid email or password"
         });
       }
       else{
-        res.json({
+        res.status(200).json({
             success:true,
             message:"login successfull"
         })
